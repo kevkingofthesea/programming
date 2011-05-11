@@ -25,7 +25,7 @@ def nestEggFixed(salary, save, growthRate, years):
 	
 	while( i < years ):
 		print i
-		fund = F[-1]*(1+0.01*growthRate) + salary*save*0.01
+		fund = F[-1]*(1 + 0.01*growthRate) + salary*save*0.01
 		F.append(fund)
 		i += 1
 		
@@ -57,11 +57,10 @@ def nestEggVariable(salary, save, growthRates):
 #     account (integers between 0 and 100).
 #   - return: a list of your retirement account value at the end of each year.
 	
-	F = []
-	fund = salary*save*0.01
-	F.append(fund)
+	F = [0]
 	
 	for r in growthRates:
+		print F[-1], r
 		fund = F[-1]*(1 + 0.01*r) + salary*save*0.01
 		F.append(fund)
 		
