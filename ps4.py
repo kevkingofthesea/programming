@@ -60,7 +60,6 @@ def nestEggVariable(salary, save, growthRates):
 	F = [0]
 	
 	for r in growthRates:
-		print F[-1], r
 		fund = F[-1]*(1 + 0.01*r) + salary*save*0.01
 		F.append(fund)
 		
@@ -83,16 +82,21 @@ def testNestEggVariable():
 #
 
 def postRetirement(savings, growthRates, expenses):
-    """
-    - savings: the initial amount of money in your savings account.
-    - growthRate: a list of the annual percent increases in your investment
-      account (an integer between 0 and 100).
-    - expenses: the amount of money you plan to spend each year during
-      retirement.
-    - return: a list of your retirement account value at the end of each year.
-    """
-    # TODO: Your code here.
-
+#   - savings: the initial amount of money in your savings account.
+#   - growthRate: a list of the annual percent increases in your investment
+#     account (an integer between 0 and 100).
+#   - expenses: the amount of money you plan to spend each year during
+#     retirement.
+#   - return: a list of your retirement account value at the end of each year.
+	F = [savings]
+	
+	for r in growthRates:
+		print F[-1], r
+		fund = F[-1]*(1 + 0.01*r) - expenses
+		F.append(fund)
+		
+	print F
+	
 def testPostRetirement():
     savings     = 100000
     growthRates = [10, 5, 0, 5, 1]
