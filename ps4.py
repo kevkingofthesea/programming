@@ -162,3 +162,7 @@ def testFindMaxExpenses():
     # 1229.95548986
 
     # TODO: Add more test cases here.
+
+	
+if __name__ == "__main__":
+	testFindMaxExpenses()
