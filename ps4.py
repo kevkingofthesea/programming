@@ -49,14 +49,24 @@ def testNestEggFixed():
 
 def nestEggVariable(salary, save, growthRates):
     # TODO: Your code here.
-    """
-    - salary: the amount of money you make each year.
-    - save: the percent of your salary to save in the investment account each
-      year (an integer between 0 and 100).
-    - growthRate: a list of the annual percent increases in your investment
-      account (integers between 0 and 100).
-    - return: a list of your retirement account value at the end of each year.
-    """
+
+#   - salary: the amount of money you make each year.
+#   - save: the percent of your salary to save in the investment account each
+#     year (an integer between 0 and 100).
+#   - growthRate: a list of the annual percent increases in your investment
+#     account (integers between 0 and 100).
+#   - return: a list of your retirement account value at the end of each year.
+	
+	F = []
+	fund = salary*save*0.01
+	F.append(fund)
+	
+	for r in growthRates:
+		fund = F[-1]*(1 + 0.01*r) + salary*save*0.01
+		F.append(fund)
+		
+	print F
+	
 
 def testNestEggVariable():
     salary      = 10000
