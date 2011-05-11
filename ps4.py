@@ -24,12 +24,11 @@ def nestEggFixed(salary, save, growthRate, years):
 	i = 1
 	
 	while( i < years ):
-		print i
 		fund = F[-1]*(1 + 0.01*growthRate) + salary*save*0.01
 		F.append(fund)
 		i += 1
 		
-	print F
+#	print F
 
 def testNestEggFixed():
     salary     = 10000
@@ -63,7 +62,7 @@ def nestEggVariable(salary, save, growthRates):
 		fund = F[-1]*(1 + 0.01*r) + salary*save*0.01
 		F.append(fund)
 		
-	print F
+	return F[-1]
 	
 
 def testNestEggVariable():
@@ -91,11 +90,12 @@ def postRetirement(savings, growthRates, expenses):
 	F = [savings]
 	
 	for r in growthRates:
-		print F[-1], r
+#		print F[-1], r
 		fund = F[-1]*(1 + 0.01*r) - expenses
 		F.append(fund)
 		
-	print F
+#	print F
+	return F[-1]
 	
 def testPostRetirement():
     savings     = 100000
@@ -115,18 +115,40 @@ def testPostRetirement():
 
 def findMaxExpenses(salary, save, preRetireGrowthRates, postRetireGrowthRates,
                     epsilon):
-    """
-    - salary: the amount of money you make each year.
-    - save: the percent of your salary to save in the investment account each
-      year (an integer between 0 and 100).
-    - preRetireGrowthRates: a list of annual growth percentages on investments
-      while you are still working.
-    - postRetireGrowthRates: a list of annual growth percentages on investments
-      while you are retired.
-    - epsilon: an upper bound on the absolute value of the amount remaining in
-      the investment fund at the end of retirement.
-    """
-    # TODO: Your code here.
+
+#   - salary: the amount of money you make each year.
+#   - save: the percent of your salary to save in the investment account each
+#     year (an integer between 0 and 100).
+#   - preRetireGrowthRates: a list of annual growth percentages on investments
+#     while you are still working.
+#   - postRetireGrowthRates: a list of annual growth percentages on investments
+#     while you are retired.
+#   - epsilon: an upper bound on the absolute value of the amount remaining in
+#     the investment fund at the end of retirement.
+
+# bounds expenses between 0 and entire savings account
+	low = 0
+	nestEgg = nestEggVariable(salary, save, preRetireGrowthRates)
+	high = nestEgg
+	guess = (low + high)/2.0 
+	ctr = 1
+	
+	outcome = postRetirement(high, postRetireGrowthRates, guess)
+	
+	while abs(outcome) > epsilon and ctr <= 100:
+		print 'low: ', low, 'high: ', high, 'guess: ', guess, 'Remaining funds: $', outcome
+		if outcome > 0:
+			low = guess
+		else:
+			high = guess
+		
+		guess = (low + high)/2.0
+		outcome = postRetirement(nestEgg, postRetireGrowthRates, guess)
+		ctr += 1
+		
+	assert ctr <= 100, 'Iteration count exceeded'
+	
+	print 'Maximum possible expenses: $', guess
 
 def testFindMaxExpenses():
     salary                = 10000
@@ -134,8 +156,7 @@ def testFindMaxExpenses():
     preRetireGrowthRates  = [3, 4, 5, 0, 3]
     postRetireGrowthRates = [10, 5, 0, 5, 1]
     epsilon               = .01
-    expenses = findMaxExpenses(salary, save, preRetireGrowthRates,
-                               postRetireGrowthRates, epsilon)
+    expenses = findMaxExpenses(salary, save, preRetireGrowthRates, postRetireGrowthRates, epsilon)
     print expenses
     # Output should have a value close to:
     # 1229.95548986
