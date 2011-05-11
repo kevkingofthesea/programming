@@ -136,7 +136,7 @@ def findMaxExpenses(salary, save, preRetireGrowthRates, postRetireGrowthRates,
 	outcome = postRetirement(high, postRetireGrowthRates, guess)
 	
 	while abs(outcome) > epsilon and ctr <= 100:
-		print 'low: ', low, 'high: ', high, 'guess: ', guess, 'Remaining funds: $', outcome
+#		print 'low: ', low, 'high: ', high, 'guess: ', guess, 'Remaining funds: $', outcome
 		if outcome > 0:
 			low = guess
 		else:
@@ -148,7 +148,8 @@ def findMaxExpenses(salary, save, preRetireGrowthRates, postRetireGrowthRates,
 		
 	assert ctr <= 100, 'Iteration count exceeded'
 	
-	print 'Maximum possible expenses: $', guess
+#	print 'Maximum possible expenses:\n$'
+	return guess
 
 def testFindMaxExpenses():
     salary                = 10000
